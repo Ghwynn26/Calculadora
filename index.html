@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="calculadora">
+        <input type="text" id="resultado" disabled>
+        <div class="botones">
+            <button onclick="agregar('1')">1</button>
+            <button onclick="agregar('2')">2</button>
+            <button onclick="agregar('3')">3</button>
+            <button onclick="operar('+')">+</button>
+        </div>
+        <div class="botones">
+            <button onclick="agregar('4')">4</button>
+            <button onclick="agregar('5')">5</button>
+            <button onclick="agregar('6')">6</button>
+            <button onclick="operar('-')">-</button>
+        </div>
+        <div class="botones">
+            <button onclick="agregar('7')">7</button>
+            <button onclick="agregar('8')">8</button>
+            <button onclick="agregar('9')">9</button>
+            <button onclick="operar('*')">*</button>
+        </div>
+        <div class="botones">
+            <button onclick="limpiar()">C</button>
+            <button onclick="agregar('0')">0</button>
+            <button onclick="calcular()">=</button>
+            <button onclick="operar('/')">/</button>
+        </div>
+    </div>
+    <script>
+        let operacion = '';
+        let resultado = '';
+
+        function agregar(numero) {
+            resultado += numero;
+            document.getElementById('resultado').value = resultado;
+        }
+
+        function operar(op) {
+            operacion = op;
+            resultado += ' ' + op + ' ';
+            document.getElementById('resultado').value = resultado;
+        }
+
+        function limpiar() {
+            resultado = '';
+            operacion = '';
+            document.getElementById('resultado').value = '';
+        }
+
+        function calcular() {
+            const partes = resultado.split(' ');
+            let total = parseFloat(partes[0]);
+            for (let i = 1; i < partes.length; i += 2) {
+                const operador = partes[i];
+                const siguiente = parseFloat(partes[i + 1]);
+                if (operador === '+') total += siguiente;
+                else if (operador === '-') total -= siguiente;
+                else if (operador === '*') total *= siguiente;
+                else if (operador === '/') total /= siguiente;
+            }
+            resultado = total.toString();
+            document.getElementById('resultado').value = resultado;
+        }
+    </script>
+</body>
+</html>
